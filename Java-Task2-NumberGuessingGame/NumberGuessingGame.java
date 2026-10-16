@@ -54,13 +54,21 @@ public class NumberGuessingGame extends JFrame {
 
         guessButton.addActionListener(e -> processGuess());
         guessInput.addActionListener(e -> processGuess());
-        playAgainButton.addActionListener(e -> startNewRound());
-        difficultyBox.addActionListener(e -> startNewRound());
+        playAgainButton.addActionListener(e -> {
+            roundCount++;
+            startNewRound();
+        });
+        difficultyBox.addActionListener(e -> {
+            if (attemptsUsed == 0 && guessButton.isEnabled()) {
+                startNewRound();
+            }
+        });
 
         startNewRound();
     }
 
     void startNewRound() {
+        difficultyBox.setEnabled(true);
         int choice = difficultyBox.getSelectedIndex();
         if (choice == 0) {
             maxRange = 50;
@@ -99,6 +107,10 @@ public class NumberGuessingGame extends JFrame {
             return;
         }
 
+        if (attemptsUsed == 0) {
+            difficultyBox.setEnabled(false);
+        }
+
         attemptsUsed++;
 
         if (guess == targetNumber) {
@@ -124,7 +136,7 @@ public class NumberGuessingGame extends JFrame {
         guessInput.setEnabled(false);
         guessButton.setEnabled(false);
         playAgainButton.setEnabled(true);
-        roundCount++;
+        difficultyBox.setEnabled(true);
     }
 
     public static void main(String[] args) {
