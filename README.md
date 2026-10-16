@@ -8,7 +8,7 @@ This repository contains the projects developed during the **Oasis Infobyte (OIB
 
 | Task | Project | Tech Stack | Status | Description |
 | :---: | :--- | :--- | :---: | :--- |
-| **02** | [**Number Guessing Game**](./Java-Task2-NumberGuessingGame) | Java (Swing GUI) | Completed | Number guessing game with hints, attempt counters, difficulty levels, round history, and score tracking. |
+| **02** | [**Number Guessing Game**](./Java-Task2-NumberGuessingGame) | Java (Swing GUI) | In Review | Number guessing game with hints, attempt counter, round history, and score tracking. |
 
 ---
 
@@ -18,8 +18,8 @@ This repository contains the projects developed during the **Oasis Infobyte (OIB
 cd Java-Task2-NumberGuessingGame
 
 # Compile
-javac -encoding UTF-8 -d build src/*.java
+javac NumberGuessingGame.java
 
 # Run Swing GUI
-java -cp build Main
+java NumberGuessingGame
 ```

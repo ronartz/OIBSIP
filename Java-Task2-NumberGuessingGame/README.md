@@ -6,52 +6,38 @@
 
 ---
 
-## 📌 Project Overview
+## 📌 Project Description
 
-An interactive, beginner-friendly desktop Number Guessing Game built in Java using the **Swing** GUI framework. The computer generates a secret random number, and the player attempts to guess it within a limited number of attempts, receiving clear higher/lower hints after each guess.
-
-The application follows a clean separation of concerns:
-- `GuessingGame.java`: Core game logic, attempts tracking, difficulty ranges, and score history (no UI code).
-- `GameWindow.java`: Graphical user interface built with standard Swing components in a clean dark theme.
-- `Main.java`: Clean application entry point.
+An interactive desktop Number Guessing Game built using Core Java and Java Swing. The computer randomly generates a secret number between 1 and 100, and the player gets up to 7 valid attempts to guess it. After each guess, the game provides clear feedback ("Too High", "Too Low", or "Correct"), tracks remaining attempts, maintains a multi-round scoreboard, and displays round history.
 
 ---
 
 ## 🚀 Features
 
-- **Random Number Generation**: Generates a new random number at the start of every round.
-- **Interactive Swing Input**: Input via text field with Enter key support or button click.
-- **Accurate Hints**: Displays `"Too High!"`, `"Too Low!"`, or `"Correct!"` after each valid guess.
-- **Attempt Tracking**: Continuously displays remaining attempts alongside a visual progress bar.
-- **Maximum Attempt Limits**: Enforces attempt limits (7 attempts in standard Medium mode) and displays `"You Lost!"` revealing the secret number if attempts run out.
-- **Difficulty Modes**:
-  - **Easy**: 1–50 (10 attempts)
-  - **Medium**: 1–100 (7 attempts) — *Default*
-  - **Hard**: 1–200 (5 attempts)
-- **Scoreboard & History**: Tracks total wins, total losses, and shows round-by-round summary logs.
-- **Play Again & Reset**: Easily replay rounds or reset session scores back to round 1.
-- **Input Validation**: Safely handles empty input, letters, symbols, and numbers outside the valid range without crashing or consuming player attempts.
+- **Random Number Generation**: Generates a random number from 1 to 100 at the start of each round.
+- **Swing User Interface**: Clean dark-themed GUI built with standard Swing components (`JFrame`, `JPanel`, `JLabel`, `JTextField`, `JButton`, `JTextArea`, `JScrollPane`).
+- **Input Submission**: Submit guesses by clicking **Guess** or pressing the `Enter` key.
+- **Immediate Feedback**: Displays "Too High", "Too Low", or "Correct" with color-coded alerts.
+- **Attempt Tracking**: Real-time counter showing remaining attempts (7 attempts per round).
+- **Input Validation**: Rejects empty inputs, letters, symbols, and numbers outside 1–100 without consuming attempts.
+- **Win & Loss Handling**:
+  - Displays total attempts used upon winning.
+  - Displays "Game Over" and reveals the secret number when attempts reach 0.
+  - Automatically disables guess inputs when a round ends.
+- **Play Again**: Restarts a new round with a fresh secret number while preserving score and round history.
+- **Difficulty Levels (Bonus)**:
+  - **Easy**: Range 1–50 (10 attempts)
+  - **Medium**: Range 1–100 (7 attempts) — *Default*
+  - **Hard**: Range 1–200 (5 attempts)
+- **Scoreboard & History**: Tracks round number, total wins, remaining attempts, and displays a scrollable summary log (`Round X — guessed in Y attempts`).
 
 ---
 
-## 🎮 How to Play
+## 🛠️ Requirements & Tech Stack
 
-1. Choose your desired difficulty from the dropdown (applied at the start of each round).
-2. Enter your guess in the input box and click **Guess** (or press `Enter`).
-3. Read the hint:
-   - `"Too High!"` → Try a smaller number.
-   - `"Too Low!"` → Try a larger number.
-   - `"Correct!"` → You won the round!
-4. If you run out of attempts, `"You Lost!"` is shown along with the secret number.
-5. Click **Play Again** to begin the next round, or **Reset Scores** to restart from Round 1.
-
----
-
-## 🛠️ Technologies Used
-
-- **Language**: Java (JDK 8+ / OpenJDK 25)
-- **GUI Framework**: Java Swing & AWT (`JFrame`, `JPanel`, `JLabel`, `JTextField`, `JButton`, `JComboBox`, `JProgressBar`, `JTextArea`, `JScrollPane`)
-- **Core Concepts**: `java.util.Random`, `java.util.ArrayList`, standard event listeners, layout managers (`BorderLayout`, `GridLayout`, `BoxLayout`)
+- **Java**: JDK 8 or higher (OpenJDK 25 tested)
+- **GUI Framework**: Java Swing & AWT
+- **Operating System**: Linux (Fedora KDE) / Windows / macOS
 
 ---
 
@@ -59,25 +45,49 @@ The application follows a clean separation of concerns:
 
 ```text
 Java-Task2-NumberGuessingGame/
-├── README.md
-└── src/
-    ├── Main.java         # Application entry point
-    ├── GuessingGame.java # Core game logic (independent of UI)
-    └── GameWindow.java   # Swing GUI interface
+├── NumberGuessingGame.java   # Complete game logic and Swing GUI
+├── README.md                 # Project documentation and manual testing checklist
+└── screenshots/              # Gameplay screenshots captured on Fedora KDE
 ```
 
 ---
 
-## 💻 How to Compile and Run
+## 💻 Compilation & Execution
 
-Open your terminal in the `Java-Task2-NumberGuessingGame` folder:
+Open terminal in the `Java-Task2-NumberGuessingGame` directory:
 
-### 1. Compile the project
+### 1. Compile
 ```bash
-javac -encoding UTF-8 -d build src/*.java
+javac NumberGuessingGame.java
 ```
 
-### 2. Run the application
+### 2. Run
 ```bash
-java -cp build Main
+java NumberGuessingGame
 ```
+
+---
+
+## 📸 Screenshots
+
+Authentic screenshots can be captured using KDE Spectacle on Fedora and stored in the `screenshots/` directory:
+
+- `screenshots/gameplay.png` — Active round showing guess submission and hint.
+- `screenshots/win.png` — Victory screen showing attempts used and score update.
+- `screenshots/game_over.png` — Game over screen showing revealed secret number.
+
+---
+
+## ✅ Manual Testing Checklist
+
+- [ ] **Startup**: Window opens centered with Round 1, 0 Wins, and 7 Attempts Left.
+- [ ] **Enter Key**: Type a number and press `Enter` to submit.
+- [ ] **Guess Button**: Type a number and click `Guess` to submit.
+- [ ] **Hints**: Returns "Too High!" or "Too Low!".
+- [ ] **Win**: Entering the correct number shows "Correct!", increments wins, disables inputs, and logs to history.
+- [ ] **Game Over**: Using 7 failed attempts shows "You Lost! The correct number was: X", disables inputs, and enables Play Again.
+- [ ] **Play Again**: Starts Round 2 with 7 attempts and a new secret number.
+- [ ] **Input Validation**:
+  - [ ] Empty text shows "Please enter a valid number!" (attempts remaining unchanged).
+  - [ ] Non-numeric input (e.g. `abc`) shows "Please enter a valid number!" (attempts remaining unchanged).
+  - [ ] Out-of-bounds input (e.g. `150` or `0`) shows "Enter 1 to 100 only!" (attempts remaining unchanged).
