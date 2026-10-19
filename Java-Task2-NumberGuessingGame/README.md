@@ -81,12 +81,12 @@ The `screenshots/` directory is prepared for submission artifacts. Screenshots c
 
 ## ✅ Manual Testing Checklist
 
-- [ ] **Startup**: Window opens with Medium difficulty selected, Round: 1, Wins: 0, and Attempts left: 7.
+- [ ] **Startup**: Window opens with Medium difficulty selected, Round: 1, Total Wins: 0, and Attempts left: 7.
 - [ ] **Difficulty Selection**: Changing difficulty before making a guess updates range and attempts immediately (e.g. Easy sets 1–50 with 10 attempts).
 - [ ] **Mid-round Lock**: After the first valid guess, the difficulty selector is disabled until the round finishes.
 - [ ] **Guess Submission**: Typing a guess and pressing `Enter` or clicking `Guess` submits the guess.
 - [ ] **Hints**: Returns `"Too High!"` if guess > target, or `"Too Low!"` if guess < target.
-- [ ] **Win**: Guessing the target displays `"Correct!"`, increments wins, and logs `"Round X — guessed in Y attempts"`.
+- [ ] **Win**: Guessing the target displays `"Correct!"`, increments total wins, and logs `"Round X — guessed in Y attempts"` in the round history.
 - [ ] **Loss**: Using all attempts displays `"You Lost! The correct number was: X"` and logs the loss.
 - [ ] **Round Transition**: The scoreboard displays the current round number during the win/loss state, and increments to the next round only when `Play Again` is clicked.
 - [ ] **Input Validation**:

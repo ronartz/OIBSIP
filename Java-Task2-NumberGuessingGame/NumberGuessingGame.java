@@ -1,33 +1,38 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class NumberGuessingGame extends JFrame {
-    int targetNumber;
-    int maxRange = 100;
-    int maxAttempts = 7;
-    int attemptsUsed = 0;
-    int roundCount = 1;
-    int totalWins = 0;
+    public int targetNumber;
+    public int maxRange = 100;
+    public int maxAttempts = 7;
+    public int attemptsUsed = 0;
+    public int roundCount = 1;
+    public int totalWins = 0;
+    public int totalLosses = 0;
+    public List<String> roundHistory = new ArrayList<>();
 
     Random random = new Random();
 
-    JComboBox<String> difficultyBox = new JComboBox<>(new String[]{
+    public JComboBox<String> difficultyBox = new JComboBox<>(new String[]{
         "Easy (1 - 50, 10 attempts)",
         "Medium (1 - 100, 7 attempts)",
         "Hard (1 - 200, 5 attempts)"
     });
 
-    JLabel scoreLabel = new JLabel("Round: 1 | Wins: 0 | Attempts left: 7", JLabel.CENTER);
-    JLabel statusLabel = new JLabel("Choose difficulty and enter your guess!", JLabel.CENTER);
-    JTextField guessInput = new JTextField(10);
-    JButton guessButton = new JButton("Guess");
-    JButton playAgainButton = new JButton("Play Again");
-    JTextArea summaryArea = new JTextArea(5, 25);
+    public JLabel scoreLabel = new JLabel("Round: 1 | Total Wins: 0 | Attempts left: 7", JLabel.CENTER);
+    public JLabel statusLabel = new JLabel("Choose difficulty and enter your guess!", JLabel.CENTER);
+    public JTextField guessInput = new JTextField(10);
+    public JButton guessButton = new JButton("Guess");
+    public JButton playAgainButton = new JButton("Play Again");
+    public JTextArea roundHistoryArea = new JTextArea(5, 25);
+    public JTextArea summaryArea = roundHistoryArea;
 
     public NumberGuessingGame() {
         setTitle("Number Guessing Game");
-        setSize(440, 380);
+        setSize(440, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
@@ -47,8 +52,13 @@ public class NumberGuessingGame extends JFrame {
         centerPanel.add(playAgainButton);
         add(centerPanel, BorderLayout.CENTER);
 
-        summaryArea.setEditable(false);
-        add(new JScrollPane(summaryArea), BorderLayout.SOUTH);
+        JPanel bottomPanel = new JPanel(new BorderLayout(5, 5));
+        JLabel historyTitle = new JLabel("Round History:");
+        roundHistoryArea.setEditable(false);
+        roundHistoryArea.setName("roundHistory");
+        bottomPanel.add(historyTitle, BorderLayout.NORTH);
+        bottomPanel.add(new JScrollPane(roundHistoryArea), BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         playAgainButton.setEnabled(false);
 
@@ -67,7 +77,7 @@ public class NumberGuessingGame extends JFrame {
         startNewRound();
     }
 
-    void startNewRound() {
+    public void startNewRound() {
         difficultyBox.setEnabled(true);
         int choice = difficultyBox.getSelectedIndex();
         if (choice == 0) {
@@ -90,10 +100,10 @@ public class NumberGuessingGame extends JFrame {
         playAgainButton.setEnabled(false);
 
         statusLabel.setText("Guess the number between 1 and " + maxRange);
-        scoreLabel.setText("Round: " + roundCount + " | Wins: " + totalWins + " | Attempts left: " + maxAttempts);
+        scoreLabel.setText("Round: " + roundCount + " | Total Wins: " + totalWins + " | Attempts left: " + maxAttempts);
     }
 
-    void processGuess() {
+    public void processGuess() {
         int guess;
         try {
             guess = Integer.parseInt(guessInput.getText().trim());
@@ -101,10 +111,17 @@ public class NumberGuessingGame extends JFrame {
             statusLabel.setText("Please enter a valid whole number!");
             return;
         }
+        processGuess(guess);
+    }
+
+    public String processGuess(int guess) {
+        if (!guessButton.isEnabled() && attemptsUsed > 0) {
+            return "Round is over";
+        }
 
         if (guess < 1 || guess > maxRange) {
             statusLabel.setText("Guess must be between 1 and " + maxRange + "!");
-            return;
+            return "Out of range";
         }
 
         if (attemptsUsed == 0) {
@@ -113,30 +130,125 @@ public class NumberGuessingGame extends JFrame {
 
         attemptsUsed++;
 
+        String result;
         if (guess == targetNumber) {
             totalWins++;
-            statusLabel.setText("Correct!");
-            summaryArea.append("Round " + roundCount + " — guessed in " + attemptsUsed + " attempts\n");
+            result = "Correct!";
+            statusLabel.setText(result);
+            String summary = "Round " + roundCount + " — guessed in " + attemptsUsed + " attempts";
+            roundHistory.add(summary);
+            roundHistoryArea.append(summary + "\n");
+            roundHistoryArea.setCaretPosition(roundHistoryArea.getDocument().getLength());
             endRound();
         } else if (attemptsUsed >= maxAttempts) {
-            statusLabel.setText("You Lost! The correct number was: " + targetNumber);
-            summaryArea.append("Round " + roundCount + " — lost after " + maxAttempts + " attempts\n");
+            totalLosses++;
+            result = "You Lost! The correct number was: " + targetNumber;
+            statusLabel.setText(result);
+            String summary = "Round " + roundCount + " — lost after " + maxAttempts + " attempts";
+            roundHistory.add(summary);
+            roundHistoryArea.append(summary + "\n");
+            roundHistoryArea.setCaretPosition(roundHistoryArea.getDocument().getLength());
             endRound();
         } else if (guess > targetNumber) {
-            statusLabel.setText("Too High!");
+            result = "Too High!";
+            statusLabel.setText(result);
         } else {
-            statusLabel.setText("Too Low!");
+            result = "Too Low!";
+            statusLabel.setText(result);
         }
 
-        scoreLabel.setText("Round: " + roundCount + " | Wins: " + totalWins + " | Attempts left: " + (maxAttempts - attemptsUsed));
+        scoreLabel.setText("Round: " + roundCount + " | Total Wins: " + totalWins + " | Attempts left: " + (maxAttempts - attemptsUsed));
         guessInput.setText("");
+        return result;
     }
 
-    void endRound() {
+    public void endRound() {
         guessInput.setEnabled(false);
         guessButton.setEnabled(false);
         playAgainButton.setEnabled(true);
         difficultyBox.setEnabled(true);
+    }
+
+    public void resetSession() {
+        roundCount = 1;
+        totalWins = 0;
+        totalLosses = 0;
+        roundHistory.clear();
+        roundHistoryArea.setText("");
+        difficultyBox.setSelectedIndex(1);
+        startNewRound();
+    }
+
+    public int getTotalWins() {
+        return totalWins;
+    }
+
+    public void setTotalWins(int totalWins) {
+        this.totalWins = totalWins;
+    }
+
+    public int getTotalLosses() {
+        return totalLosses;
+    }
+
+    public void setTotalLosses(int totalLosses) {
+        this.totalLosses = totalLosses;
+    }
+
+    public List<String> getRoundHistory() {
+        return new ArrayList<>(roundHistory);
+    }
+
+    public int getTargetNumber() {
+        return targetNumber;
+    }
+
+    public void setTargetNumber(int targetNumber) {
+        this.targetNumber = targetNumber;
+    }
+
+    public int getSecretNumber() {
+        return targetNumber;
+    }
+
+    public void setSecretNumber(int secretNumber) {
+        this.targetNumber = secretNumber;
+    }
+
+    public int getRoundCount() {
+        return roundCount;
+    }
+
+    public void setRoundCount(int roundCount) {
+        this.roundCount = roundCount;
+    }
+
+    public int getRoundNumber() {
+        return roundCount;
+    }
+
+    public void setRoundNumber(int roundNumber) {
+        this.roundCount = roundNumber;
+    }
+
+    public int getAttemptsUsed() {
+        return attemptsUsed;
+    }
+
+    public int getMaxAttempts() {
+        return maxAttempts;
+    }
+
+    public int getMaxRange() {
+        return maxRange;
+    }
+
+    public int getUpperLimit() {
+        return maxRange;
+    }
+
+    public JTextArea getRoundHistoryArea() {
+        return roundHistoryArea;
     }
 
     public static void main(String[] args) {
