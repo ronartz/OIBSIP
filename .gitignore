@@ -33,5 +33,5 @@ bin/
 hs_err_pid*
 replay_pid*
 
-# Local agent configuration
-GEMINI.md
+# Personal notes and configuration
+*.local.md
