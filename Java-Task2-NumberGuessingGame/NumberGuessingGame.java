@@ -28,7 +28,6 @@ public class NumberGuessingGame extends JFrame {
     public JButton guessButton = new JButton("Guess");
     public JButton playAgainButton = new JButton("Play Again");
     public JTextArea roundHistoryArea = new JTextArea(5, 25);
-    public JTextArea summaryArea = roundHistoryArea;
 
     public NumberGuessingGame() {
         setTitle("Number Guessing Game");
@@ -169,30 +168,8 @@ public class NumberGuessingGame extends JFrame {
         difficultyBox.setEnabled(true);
     }
 
-    public void resetSession() {
-        roundCount = 1;
-        totalWins = 0;
-        totalLosses = 0;
-        roundHistory.clear();
-        roundHistoryArea.setText("");
-        difficultyBox.setSelectedIndex(1);
-        startNewRound();
-    }
-
     public int getTotalWins() {
         return totalWins;
-    }
-
-    public void setTotalWins(int totalWins) {
-        this.totalWins = totalWins;
-    }
-
-    public int getTotalLosses() {
-        return totalLosses;
-    }
-
-    public void setTotalLosses(int totalLosses) {
-        this.totalLosses = totalLosses;
     }
 
     public List<String> getRoundHistory() {
@@ -203,32 +180,8 @@ public class NumberGuessingGame extends JFrame {
         return targetNumber;
     }
 
-    public void setTargetNumber(int targetNumber) {
-        this.targetNumber = targetNumber;
-    }
-
-    public int getSecretNumber() {
-        return targetNumber;
-    }
-
-    public void setSecretNumber(int secretNumber) {
-        this.targetNumber = secretNumber;
-    }
-
     public int getRoundCount() {
         return roundCount;
-    }
-
-    public void setRoundCount(int roundCount) {
-        this.roundCount = roundCount;
-    }
-
-    public int getRoundNumber() {
-        return roundCount;
-    }
-
-    public void setRoundNumber(int roundNumber) {
-        this.roundCount = roundNumber;
     }
 
     public int getAttemptsUsed() {
@@ -241,14 +194,6 @@ public class NumberGuessingGame extends JFrame {
 
     public int getMaxRange() {
         return maxRange;
-    }
-
-    public int getUpperLimit() {
-        return maxRange;
-    }
-
-    public JTextArea getRoundHistoryArea() {
-        return roundHistoryArea;
     }
 
     public static void main(String[] args) {

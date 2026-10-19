@@ -56,7 +56,7 @@ public class Account {
     }
 
     public boolean deposit(double amount) {
-        if (amount <= 0) {
+        if (Double.isNaN(amount) || Double.isInfinite(amount) || amount <= 0) {
             return false;
         }
         balance += amount;
@@ -65,7 +65,7 @@ public class Account {
     }
 
     public boolean withdraw(double amount) {
-        if (amount <= 0 || amount > balance) {
+        if (Double.isNaN(amount) || Double.isInfinite(amount) || amount <= 0 || amount > balance) {
             return false;
         }
         balance -= amount;
@@ -74,7 +74,7 @@ public class Account {
     }
 
     public boolean transfer(Account recipient, double amount) {
-        if (recipient == null || recipient == this || amount <= 0 || amount > balance) {
+        if (recipient == null || recipient == this || Double.isNaN(amount) || Double.isInfinite(amount) || amount <= 0 || amount > balance) {
             return false;
         }
         // Deduct from sender and credit recipient

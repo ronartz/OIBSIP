@@ -1,39 +1,34 @@
-# OIBSIP · Oasis Infobyte Java Development Internship
+# Oasis Infobyte Java Development Internship
 
-This repository contains the projects developed during the **Oasis Infobyte (OIBSIP) Java Development Internship**.
+Repository for the Oasis Infobyte (OIBSIP) Java Development Internship tasks.
 
----
+## Description
 
-## 📌 Projects & Tasks
+This repository contains two beginner-friendly Java projects developed for the internship:
+- Task 2: Number Guessing Game (Swing GUI application)
+- Task 3: ATM Interface (Console application)
 
-| Task | Project | Tech Stack | Status | Description |
-| :---: | :--- | :--- | :---: | :--- |
-| **02** | [**Number Guessing Game**](./Java-Task2-NumberGuessingGame) | Java (Swing GUI) | In Review | Number guessing game with hints, attempt counter, difficulty levels, round history, and score tracking. |
-| **03** | [**ATM Interface**](./Java-Task3-ATMInterface) | Java (Console Application) | Completed | Console-based ATM simulation with login lockout, balance inquiry, deposit, withdrawal, transfers, and transaction history. |
+## Projects
 
----
+| Task | Project | Type | Description |
+| :---: | :--- | :--- | :--- |
+| 2 | [Number Guessing Game](./Java-Task2-NumberGuessingGame) | Java Swing | Guess a randomly generated secret number with hints, difficulty levels, and attempt tracking. |
+| 3 | [ATM Interface](./Java-Task3-ATMInterface) | Java Console | Console ATM simulation supporting authentication, transaction history, withdrawals, deposits, and transfers. |
 
-## 🚀 Quick Run
+## How to Run
 
-### Task 2: Number Guessing Game
+### Number Guessing Game (Task 2)
+
 ```bash
 cd Java-Task2-NumberGuessingGame
-
-# Compile
 javac NumberGuessingGame.java
-
-# Run Swing GUI
 java NumberGuessingGame
 ```
 
-### Task 3: ATM Interface
+### ATM Interface (Task 3)
+
 ```bash
 cd Java-Task3-ATMInterface
-
-# Compile
 javac *.java
-
-# Run Console Application
 java Main
 ```
-

@@ -195,8 +195,8 @@ public class ATM {
         String input = scanner.nextLine().trim();
         try {
             double amount = Double.parseDouble(input);
-            if (amount <= 0) {
-                System.out.println("Error: Amount must be greater than zero.\n");
+            if (Double.isNaN(amount) || Double.isInfinite(amount) || amount <= 0) {
+                System.out.println("Error: Amount must be a valid positive number.\n");
                 return -1;
             }
             return amount;
