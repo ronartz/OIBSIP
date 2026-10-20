@@ -34,4 +34,6 @@ java NumberGuessingGame
 
 ## Screenshots
 
-Screenshots of gameplay can be captured during manual testing and saved in the screenshots/ directory for project demonstration.
+![Round Won and History](screenshots/Won%20%2B%20history%20rounds.png)
+
+![Round Lost](screenshots/Round%20lost.png)
